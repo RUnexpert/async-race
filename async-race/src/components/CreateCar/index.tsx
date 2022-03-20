@@ -25,14 +25,9 @@ export const CreateCar: React.FC<Props> = ({ buttonText, car, onSave }) => {
   };
 
   const onColorChange = ({ hex }: Color) => {
-    // console.log(hex);
-    // console.log();
     setNewCar({ ...newCar, color: "#" + hex });
   };
 
-  // const onInputChange = (name: string) => (event: Color) => {
-  //   setNewCar({ ...newCar, [name]: event.value });
-  // };
   const onCreateClick = async () => {
     if (newCar.name === "") {
       alert("Wrong car name!");
@@ -44,11 +39,9 @@ export const CreateCar: React.FC<Props> = ({ buttonText, car, onSave }) => {
   };
 
   return (
-    <div className='create-car'>
-      {/* <input type='text' value={newCar.name} onChange={onInputChange("name")} /> */}
-      <TextField value={newCar.name} onChange={onInputChange("name")} variant='standard' className={styles.input}></TextField>
-      {/* <input type='color' className='color' value={newCar.color} onChange={onInputChange("color")} /> */}
-      <ColorPicker value={newCar.color} onChange={onColorChange}></ColorPicker>
+    <div className={styles.createCar}>
+      <TextField value={newCar.name} onChange={onInputChange("name")} className={styles.input} />
+      <ColorPicker value={newCar.color} onChange={onColorChange} hideTextfield />
       <Button onClick={onCreateClick}>{buttonText}</Button>
     </div>
   );

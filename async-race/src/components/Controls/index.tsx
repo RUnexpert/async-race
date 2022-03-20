@@ -1,10 +1,6 @@
-import React, { useCallback, useState } from "react";
-// import { Button } from '../Button';
+import React, { useCallback } from "react";
 import { useCars } from "../../hooks/useCars";
-
-import { useCarStatuses } from "../../hooks/useCarStatuses";
 import { useRaceStatus } from "../../hooks/useRaceStatus";
-import { CarStatus } from "../../types";
 import Button from "@mui/material/Button";
 import { WinnerModal } from "../WinnerModal";
 
@@ -13,21 +9,14 @@ interface Props {}
 const randomColor = () => Math.floor(Math.random() * 10);
 
 export const Controls: React.FC<Props> = () => {
-  const { addCar, cars } = useCars();
+  const { addCar } = useCars();
 
-  const { startCars } = useCarStatuses();
-  const { raceFinish, carStarted } = useRaceStatus();
-  //TODO: Заменить на useCallBack
+  const { raceFinish, startRace } = useRaceStatus();
 
-  // const onRaceClick = () => {
-  //   startCars(cars, 'started', carStarted);
-  // };
-
-  const onRaceClick = useCallback(() => startCars(cars, "started", carStarted), [carStarted, cars, startCars]);
+  const onRaceClick = useCallback(() => startRace(), [startRace]);
 
   const onStopClick = async () => {
-    await startCars(cars, "stopped", carStarted);
-    raceFinish(cars);
+    raceFinish();
   };
 
   const onGenerateClick = async () => {

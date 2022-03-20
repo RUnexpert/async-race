@@ -1,5 +1,4 @@
-import { useState, useContext } from "react";
-import { CarStatus, CarType } from "../types";
+import { CarType } from "../types";
 import { useAppSelector, useAppDispatch } from "./useStore";
 import { addCar, removeCar } from "../store/carsReducer";
 import { RootState } from "../store";

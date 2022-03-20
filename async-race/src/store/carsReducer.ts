@@ -49,7 +49,6 @@ export const carsSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { addCar, removeCar, updateCar } = carsSlice.actions;
 
+export const { addCar, removeCar, updateCar } = carsSlice.actions;
 export default carsSlice.reducer;

@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import { CarStatus, CarType } from "../../types";
+import React, { useEffect, useRef } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
+import { moveCar, selectCarStatusById } from "../../store/carsStatusReducer";
+import { selectRaceDistance } from "../../store/raceStatusReducer";
+import { CarType } from "../../types";
 import styles from "./styles.module.css";
 import { Car } from "../Car";
 import { Flag } from "../Flag";
-// import { Button } from '../Button';
-import { useCarStatuses } from "../../hooks/useCarStatuses";
 import { useCars } from "../../hooks/useCars";
-import { useRaceStatus } from "../../hooks/useRaceStatus";
 import Button from "@mui/material/Button";
 
 interface Props {
@@ -14,20 +14,34 @@ interface Props {
   setSelectedCar: (car: CarType) => void;
 }
 
-export const CarTrack: React.FC<Props> = ({ car, setSelectedCar }) => {
+const CarTrackComponent: React.FC<Props> = ({ car, setSelectedCar }) => {
   const carRef = useRef<HTMLDivElement>(null);
-  const { carsStatuses, moveCar } = useCarStatuses();
-  const { cars, removeCar } = useCars();
-  const {
-    raceStatus: {},
-  } = useRaceStatus();
-  const status = carsStatuses[car.id] ?? { distance: 0 };
+  const { removeCar } = useCars();
+  const dispatch = useAppDispatch();
+  const status = useAppSelector(selectCarStatusById(car.id)) ?? { distance: 0 };
+  const statusRef = useRef(status);
+  statusRef.current = status;
+  const distance = useAppSelector(selectRaceDistance());
+  const timeoutIdRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    if (status?.status !== "started") {
+    if (statusRef.current?.status !== "started") {
       return;
     }
-  }, [status.distance, status]);
+
+    timeoutIdRef.current = setTimeout(() => {
+      if (statusRef.current?.status !== "started") {
+        return;
+      }
+
+      dispatch(
+        moveCar({
+          id: car.id,
+          distance: Math.min(statusRef.current.distance + 100, distance),
+        })
+      );
+    }, status.speed);
+  }, [car.id, dispatch, status.distance, status.status]);
 
   const onRemoveClick = () => {
     removeCar(car.id);
@@ -51,3 +65,5 @@ export const CarTrack: React.FC<Props> = ({ car, setSelectedCar }) => {
     </div>
   );
 };
+
+export const CarTrack = React.memo(CarTrackComponent);

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FINISH_FROM_RIGHT } from "../constants";
 import { CarType, RaceWinnerType } from "../types";
+import { RootState } from "./index";
 
 export interface RaceStatusState {
   winner: RaceWinnerType | null;
@@ -37,7 +38,6 @@ export const raceStatusSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { startRace, setWinner, finishRace } = raceStatusSlice.actions;
-
+export const selectRaceDistance = () => (store: RootState) => store.raceStatus.distance;
 export default raceStatusSlice.reducer;

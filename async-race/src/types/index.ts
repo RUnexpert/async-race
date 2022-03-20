@@ -20,7 +20,6 @@ export type PageType = "garage" | "winners";
 export interface WinnerType {
   car: CarType;
   wins: number;
-  // avgTime: number;
   minTime: number;
 }
 

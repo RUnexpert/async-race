@@ -6,11 +6,10 @@ import { Controls } from "../Controls";
 import { useCars } from "../../hooks/useCars";
 import { useAppDispatch } from "../../hooks/useStore";
 import { updateCar, addCar } from "../../store/carsReducer";
-import { useRaceStatus } from "../../hooks/useRaceStatus";
 
 export const GaragePage = () => {
   const { cars } = useCars();
-  const { raceStatus } = useRaceStatus();
+
 
   const [selectedCar, setSelectedCar] = useState<CarType | null>(null);
   const dispatch = useAppDispatch();
@@ -25,7 +24,6 @@ export const GaragePage = () => {
         <CreateCar
           buttonText='Update'
           car={selectedCar}
-          // @ts-ignore
           onSave={onUpdateCar}
         />
 
