@@ -1,0 +1,27 @@
+.footer {
+  flex: 0 0 auto;
+  /* position: fixed;
+  bottom: 0;
+  width: 100%; */
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.listItem {
+  list-style: none;
+  color: white;
+  margin-right: 50px;
+  font-weight: bold;
+}
+.listItem > a {
+  color: white;
+  text-decoration: none;
+}
+.listItem > a:hover {
+  opacity: 0.8;
+  transition: 0.5s;
+}

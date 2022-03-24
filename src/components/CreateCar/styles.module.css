@@ -1,0 +1,13 @@
+.input {
+  max-height: 30px;
+}
+.input > div > fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+.createCar {
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+}
